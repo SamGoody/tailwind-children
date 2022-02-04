@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin');
+import { default as plugin } from 'tailwindcss/plugin'
 
 const aliases = ['children', 'child'];
 
@@ -6,5 +6,5 @@ let variants = [
     ...aliases.map(v => [v, '& > *'])
     ]
 
-module.exports = plugin(({ addVariant }) =>
+export default plugin(({ addVariant }) =>
     variants.forEach(v => addVariant.apply(null, v)));

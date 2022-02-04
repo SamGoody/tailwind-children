@@ -1,17 +1,17 @@
-const fs = require('fs');
-const path = require('path');
-const postcss = require('postcss');
-const tailwind = require('tailwindcss');
-const children = require('../src/index.js');
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import postcss from 'postcss';
+import tailwind from 'tailwindcss';
+import children from '../src/index.js';
 
-const cssMatch = require('jest-matcher-css')
+import cssMatch from 'jest-matcher-css';
 expect.extend({ cssMatch })
 
 test('variants', async () => {
 
     let config = {
-        content: [path.resolve(__dirname, './test.html')],
         plugins: [children],
+        content: [resolve('./tests/test.html')],
         }
 
     let input = '@tailwind utilities'
@@ -19,6 +19,6 @@ test('variants', async () => {
     let result = await postcss(tailwind(config)).process(input, {from: undefined})
 
     // console.log(result.css, 'result.css')
-    let expected = fs.readFileSync(path.resolve(__dirname, './test.css'), 'utf8')
+    let expected = readFileSync(resolve('./tests/test.css'), 'utf8')
     expect(result.css).cssMatch(expected)
     })
