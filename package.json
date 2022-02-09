@@ -2,7 +2,7 @@
   "name": "tailwind-children",
   "version": "0.0.1",
   "description": "Tailwind plugin which enables setting CSS rules for all children in parent",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules  ./node_modules/.bin/jest"
@@ -25,9 +25,11 @@
   },
   "homepage": "https://github.com/SamGoody/tailwind-children#readme",
   "devDependencies": {
-    "jest": "^27.4.7",
+    "jest": "^27.5.1",
     "jest-matcher-css": "^1.1.0",
-    "postcss": "^8.4.6",
-    "tailwindcss": "^3.0.18"
+    "postcss": "^8.4.6"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.0.19"
   }
 }
