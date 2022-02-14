@@ -1,6 +1,6 @@
 {
   "name": "tailwind-children",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Tailwind plugin which enables setting CSS rules for all children in parent",
   "main": "src/index.cjs",
   "module": "src/index.mjs",
