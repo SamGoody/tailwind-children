@@ -3,8 +3,8 @@
   "version": "0.2.1",
   "description": "Tailwind plugin which enables setting CSS rules for all children in parent",
   "main": "src/index.cjs",
-  "module": "src/index.js",
-  "source": "src/index.js",
+  "module": "src/index.mjs",
+  "source": "src/index.mjs",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules  ./node_modules/.bin/jest"

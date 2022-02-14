@@ -1,4 +1,4 @@
-import { default as plugin } from 'tailwindcss/plugin'
+import { default as plugin } from 'tailwindcss/plugin.js'
 
 const aliases = Object.entries({
     "& >": ['children', 'child'],

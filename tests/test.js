@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import postcss from 'postcss';
 import tailwind from 'tailwindcss';
-import children from '../src/index.js';
+import children from '../src/index.mjs';
 
 import cssMatch from 'jest-matcher-css';
 expect.extend({ cssMatch })
