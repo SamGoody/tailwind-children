@@ -8,7 +8,7 @@
 2. Add to tailwind.config.js
 
 		plugins: [
-			require('tailwindcss-children'),
+			require('tailwind-children'),
 			]
 3. Build tailwind:
 		npx tailwindcss -i ./src/input.css -o ./dist/output.css
