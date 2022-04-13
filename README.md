@@ -1,5 +1,7 @@
-# Tailwind-children <div style='font-size:0.6em'>Repeat elements without repeating styles<br> *.child, .sibling, and .descendant* variants for [TailwindCSS v3+](https://tailwindcss.com).</div>
+<p style="font-size:2em"> Tailwind-children 
 
+<div style='font-size:12px'> Repeat elements without repeating styles<br> *.child, .sibling, and .descendant* variants for [TailwindCSS v3+](https://tailwindcss.com). </div>
+------
 # Installation
 
 1. Install package:
@@ -13,17 +15,30 @@
 3. Build tailwind:
 		npx tailwindcss -i ./src/input.css -o ./dist/output.css
 
-# Usage: <div style='font-size:12px'>Pre-alpha. This <i>will</i> change!</div>
+# Usage: <div style='font-size:0.5em'>Pre-alpha. This <i>will</i> change!</div>
 
 ### child variant
-Set the styles in the parent and it will apply for all children with matching `child` class.
-Can use `children` or `child` aliases.
+Set the styles in the parent and it will apply for all children with matching `child` class.  
+Aletrnatively, set the type of child with child-{element type}, and rule will be applied to matching elements. 
+Can use `children` or `child` aliases.  
+
+Event Handling:
+events set *before* the element will be applied to children.   
+*Deprecated*: 
 Use `child-*` modifiers like `child-hover` to apply state and psuedo-classes to children elements:
 
-	<div class="overflow-hidden
+	<!-- apply to all children with matching .child class -->
+    <div class="overflow-hidden
 			child:ring-white child-hover:shadow">
 		<p class="child">I have a white ring...</p>
 		<p class="child">And a shadow on hover!</p>
+	</div>
+    
+    <!-- apply to <p> elements, with shadow on hover -->
+    <div class="overflow-hidden
+			child-p:ring-white hover:child-p:shadow">
+		<p>I have a white ring...</p>
+		<p>And a shadow on hover!</p>
 	</div>
 
 ### descendant variant
@@ -38,16 +53,34 @@ Same usage, but includes non-direct descendants. Can use `descendant` or `heir` 
 			<p class="heir">And a shadow on hover!</p>
 		</div>
 	</div>
+    
+    <div class="overflow-hidden
+			descendant-p:ring-white hover:descendant-p:shadow">
+		<div>
+			<p>I have a white ring...</p>
+		</div>
+		<div>
+			<p>And a shadow on hover!</p>
+		</div>
+	</div>
+
 
 ### sibling variant
 Same basic usage, but is applied to first of the repeating elements.
 Styles must be applied twice - once for itself and once for siblings with `sibling:` variant. (This has *some* duplication, but has an advantage that the styles are applied directly to the affected element and not to the parent.)
 
 	<div>
-			<p class="
-				ring-white hover:shadow
-				sibling:ring-white sibling-hover:shadow">I have a white ring...</p>
-			<p class="sibling">And a shadow on hover!</p>
+		<p class="
+			ring-white hover:shadow
+			sibling:ring-white sibling-hover:shadow">I have a white ring...</p>
+		<p class="sibling">And a shadow on hover!</p>
+	</div>
+	
+    <div>
+		<p class="
+			ring-white hover:shadow
+			sibling-p:ring-white hover:sibling-p:shadow">I have a white ring...</p>
+		<p>And a shadow on hover!</p>
 	</div>
 
 # Rationale
@@ -141,7 +174,7 @@ And it is my hope that this plugin might be a foray into such usage!
 
 # Design Decision and Implementation
 
-Like every good project, Tailwind has a consistent style, and we should be consistent with it.
+Like every good project, Tailwind has a consistent style, and we should be consistent with it.  
 Here are examples where a TW class effects another element:
 
 	<body class="dark">
@@ -159,14 +192,22 @@ In each of these examples,
 - we have the class on both the "calling" and "receiving" elements,
 - psuedo-classes are applied as `variant-*`, eg. `peer-hover`.
 
+Therefore, in the first version of tailwind-children, we used the form `child-hover:shadow` with a dash between child and hover.
+- This differs from `child:hover:shadow`, used by [tailwindcss-children]  (and IMO more intuitive)
+- It also differs from `hover:child:shadow` used by the official [@tailwindcss/typography] plugin.
+
+To match  [@tailwindcss/typography], you can now use the form hover:child:shadow or hover:child-div:shadow.  
+In addittion, you can still use child-hover:shadow, but not when specifying a element type.  
+
 Let's see how that works out for us:
 
-1. When declaring a state, we use the form `child-hover:shadow` with a dash between child and hover.
-    - This differs from `child:hover:shadow`, used by [tailwindcss-children]  (and IMO more intuitive)
-    - It also differs from `hover:child:shadow` used by the official [@tailwindcss/typography] plugin.
-2. The rules only apply to children that have the matching 'child/sibling/etc' class.
+1. When declaring a state, we can use the form `hover:child:shadow` with the hover *before* the child.
+    - *Deprecated:* One can also use the form `child-hover:shadow`.   
+    This form cannot be used with a element type (eg. `child-div-hover:shadow` won't work).
+2. The rules only apply to children that have the matching `child/sibling/etc` class.  
 To demonstrate, if wanted only one of two children to match, here are several options.
-     a. Require elements to "opt-in" with a "child" class
+
+    a. Require elements to "opt-in" with a "child" class
     ```
 	<div class="child:shadow">
 		<p class="child">Shadow</p>
@@ -180,22 +221,22 @@ To demonstrate, if wanted only one of two children to match, here are several op
         <p class="drop-shadow-none">No Shadow</p>
     </div>
 	```
-    b. Offer a no-child class that tells it to not inherit
+    c. Offer a no-child class that tells it to not inherit
 	```
     <div class="child:shadow">
         <p>Shadow</p>
         <p class="no-child">No Shadow</p>
     </div>
 	```
-    c. Only apply inheritance to element whose type is passed in. (Either `child-span` or `child-['span']`)
+    d. Only apply inheritance to element whose type is passed in. (Either `child-span` or `child-['span']`)
     ```
 	<div class="child-span:shadow">
         <span>Shadow</span>
         <p>No Shadow</p>
     </div>
 	```
-	[tailwind-child] uses method c, and [@tailwindcss/typography] supports methods b, c and d.
-	In this version, we are still trying to be close-minded tw style, but will probably eventually switch to mimic typography.
+	[tailwind-child] uses method d, and [@tailwindcss/typography] supports methods b, c and d.  
+	We hope to support all 4, but c is not yet implemented.
 3. No using a class to copy other classes. Excludes the "better sibling solution" above.
 The idea was to set a flag that the styles and events that applied to the first should be applied to all siblings. Eventually, I do hope to implement this, so that it can be ignored by purists.
 4. No custom attributes, which excludes the "better children solution" above.
