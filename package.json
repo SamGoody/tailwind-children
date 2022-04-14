@@ -9,6 +9,10 @@
     "require": "./dist/index.js",
     "import": "./src/index.mjs"
   },
+  "files": [ 
+    "./src/*", 
+    "./dist/*"
+    ],
   "scripts": {
     "test": "node --experimental-vm-modules  ./node_modules/.bin/jest"
   },
