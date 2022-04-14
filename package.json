@@ -10,8 +10,9 @@
     "import": "./src/index.mjs"
   },
   "files": [
-    "./src/*",
-    "./dist/*"
+    "./src/index.mjs",
+    "./src/index.cjs",
+    "./dist/index.js"
   ],
   "scripts": {
     "test": "node --experimental-vm-modules  ./node_modules/.bin/jest"
