@@ -2,10 +2,16 @@
   "name": "tailwind-children",
   "version": "0.2.2",
   "description": "Tailwind plugin which enables setting CSS rules for all children in parent",
-  "main": "src/index.cjs",
-  "module": "src/index.mjs",
-  "source": "src/index.mjs",
-  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./src/index.mjs",
+  "source": "./src/index.mjs",
+  "exports": {
+    "require": "./src/index.cjs",
+    "import": "./src/index.mjs"
+  },
+  "files": [
+    "./dist/index.js"
+  ],
   "scripts": {
     "test": "node --experimental-vm-modules  ./node_modules/.bin/jest"
   },
