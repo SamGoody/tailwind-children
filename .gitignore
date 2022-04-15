@@ -1,7 +1,7 @@
 node_modules
 
 # Generated files
-dist/index.js
+# dist/index.js
 
 ### Common Ignores from https://github.com/github/gitignore/tree/main/Global ###
 
