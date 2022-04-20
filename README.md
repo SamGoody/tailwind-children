@@ -37,8 +37,7 @@ Use `child-*` modifiers like `child-hover` to apply state and psuedo-classes to 
 
 ```html
 <!-- apply to all children with matching .child class -->
-<div class="overflow-hidden
-		child:ring-white child-hover:shadow">
+<div class="overflow-hidden child:ring-white child-hover:shadow">
 	<p class="child">I have a white ring...</p>
 	<p class="child">And a shadow on hover!</p>
 </div>
@@ -274,6 +273,6 @@ I might eventually implement it, even though it is not a tailwind style rule at 
 
 Please open issues, file bug reports, give me your opinions on variant names, default styles and behaviors, and whatever else you can think of. There are a lot of good things input can add!
 
-[tailwindcss-children](https://github.com/benface/tailwindcss-children) <br/>
-[@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin) <br/>
-[tailwind-child](https://github.com/racha/tailwind-child)
+[tailwindcss-children]: https://github.com/benface/tailwindcss-children
+[@tailwindcss/typography]: https://tailwindcss.com/docs/typography-plugin
+[tailwind-child]: https://github.com/racha/tailwind-child
