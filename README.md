@@ -1,21 +1,29 @@
-<p style="font-size:2em"> Tailwind-children 
+# Tailwind-children 
 
-<div style='font-size:12px'> Repeat elements without repeating styles<br> *.child, .sibling, and .descendant* variants for [TailwindCSS v3+](https://tailwindcss.com). </div>
+Repeat elements without repeating styles
+	`*.child`, `.sibling`, and `.descendant*` variants for [TailwindCSS v3+](https://tailwindcss.com)
+
 ------
+
 # Installation
 
 1. Install package:
-		npm install tailwind-children --save
+```sh
+npm install tailwind-children --save
+```
 
 2. Add to tailwind.config.js
-
-		plugins: [
-			require('tailwindcss-children'),
-			]
+```js
+plugins: [
+    require('tailwindcss-children'),
+]
+```
 3. Build tailwind:
-		npx tailwindcss -i ./src/input.css -o ./dist/output.css
+```
+npx tailwindcss -i ./src/input.css -o ./dist/output.css
+```
 
-# Usage: <div style='font-size:0.5em'>Pre-alpha. This <i>will</i> change!</div>
+## Usage: <br> Pre-alpha. This *will* change!
 
 ### child variant
 Set the styles in the parent and it will apply for all children with matching `child` class.  
@@ -27,61 +35,65 @@ events set *before* the element will be applied to children.
 *Deprecated*: 
 Use `child-*` modifiers like `child-hover` to apply state and psuedo-classes to children elements:
 
-	<!-- apply to all children with matching .child class -->
-    <div class="overflow-hidden
-			child:ring-white child-hover:shadow">
-		<p class="child">I have a white ring...</p>
-		<p class="child">And a shadow on hover!</p>
-	</div>
-    
-    <!-- apply to <p> elements, with shadow on hover -->
-    <div class="overflow-hidden
-			child-p:ring-white hover:child-p:shadow">
-		<p>I have a white ring...</p>
-		<p>And a shadow on hover!</p>
-	</div>
+```html
+<!-- apply to all children with matching .child class -->
+<div class="overflow-hidden child:ring-white child-hover:shadow">
+	<p class="child">I have a white ring...</p>
+	<p class="child">And a shadow on hover!</p>
+</div>
 
-### descendant variant
+<!-- apply to <p> elements, with shadow on hover -->
+<div class="overflow-hidden
+		child-p:ring-white hover:child-p:shadow">
+	<p>I have a white ring...</p>
+	<p>And a shadow on hover!</p>
+</div>
+```
+
+## Descendant variant
 Same usage, but includes non-direct descendants. Can use `descendant` or `heir` aliases
 
-	<div class="overflow-hidden
-			heir:ring-white heir-hover:shadow">
-		<div>
-			<p class="heir">I have a white ring...</p>
-		</div>
-		<div>
-			<p class="heir">And a shadow on hover!</p>
-		</div>
-	</div>
-    
-    <div class="overflow-hidden
-			descendant-p:ring-white hover:descendant-p:shadow">
-		<div>
-			<p>I have a white ring...</p>
-		</div>
-		<div>
-			<p>And a shadow on hover!</p>
-		</div>
-	</div>
-
-
-### sibling variant
-Same basic usage, but is applied to first of the repeating elements.
-Styles must be applied twice - once for itself and once for siblings with `sibling:` variant. (This has *some* duplication, but has an advantage that the styles are applied directly to the affected element and not to the parent.)
-
+```html
+<div class="overflow-hidden
+		heir:ring-white heir-hover:shadow">
 	<div>
-		<p class="
-			ring-white hover:shadow
-			sibling:ring-white sibling-hover:shadow">I have a white ring...</p>
-		<p class="sibling">And a shadow on hover!</p>
+		<p class="heir">I have a white ring...</p>
 	</div>
-	
-    <div>
-		<p class="
-			ring-white hover:shadow
-			sibling-p:ring-white hover:sibling-p:shadow">I have a white ring...</p>
+	<div>
+		<p class="heir">And a shadow on hover!</p>
+	</div>
+</div>
+
+<div class="overflow-hidden
+		descendant-p:ring-white hover:descendant-p:shadow">
+	<div>
+		<p>I have a white ring...</p>
+	</div>
+	<div>
 		<p>And a shadow on hover!</p>
 	</div>
+</div>
+```
+
+## Sibling variant
+Same basic usage, but is applied to first of the repeating elements.
+Styles must be applied twice - once for itself and once for siblings with `sibling:` variant. (This has *some* duplication, but has an advantage that the styles are applied directly to the affected element and not to the parent)
+
+```html
+<div>
+	<p class="
+		ring-white hover:shadow
+		sibling:ring-white sibling-hover:shadow">I have a white ring...</p>
+	<p class="sibling">And a shadow on hover!</p>
+</div>
+
+<div>
+	<p class="
+		ring-white hover:shadow
+		sibling-p:ring-white hover:sibling-p:shadow">I have a white ring...</p>
+	<p>And a shadow on hover!</p>
+</div>
+```
 
 # Rationale
 
@@ -97,41 +109,46 @@ And its an issue which is surprising, as Tailwind's class based nature should ma
 
 This, then, is an attempt to solve the issue of reusing styles through a plugin, and maybe @adam will see this and make it official :)
 
-### The Issue
+## The Issue
 
 To copy the example loosely from https://tailwindcss.com/docs/reusing-styles.
-Let's say you want to experiment with adding a shadow to all your `<img>s`.
+Let's say you want to experiment with adding a shadow to all your `<img>`s.
 Manually copying it in each one is slowly and buggy. What to do?
 
-	<div class="mt-3 flex -space-x-2 overflow-hidden">
-		<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img0.jpg" alt=""/>
-		<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img1.jpg" alt=""/>
-		<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img2.jpg" alt=""/>
-		<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img3.jpg" alt=""/>
-		<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img4.jpg" alt=""/>
-	</div>
+```html
+<div class="mt-3 flex -space-x-2 overflow-hidden">
+	<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img0.jpg" alt=""/>
+	<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img1.jpg" alt=""/>
+	<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img2.jpg" alt=""/>
+	<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img3.jpg" alt=""/>
+	<img class="inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img4.jpg" alt=""/>
+</div>
+```
 
-### A Proper Solution
+## A Proper Solution
 
 Use `heir`, `child`, or `sibling` variants to target the respective elements (see usage above).
 
-	<div class="mt-3 flex -space-x-2 overflow-hidden
-		child:inline-block child:h-12 child:w-12 child:rounded-full child:ring-2 child:ring-white child-hover:shadow">
-		<img class="child" src="/img0.jpg" alt=""/>
-		<img class="child" src="/img1.jpg" alt=""/>
-		<img class="child" src="/img2.jpg" alt=""/>
-		<img class="child" src="/img3.jpg" alt=""/>
-		<img class="child" src="/img4.jpg" alt=""/>
-	</div>
+```html
+<div class="mt-3 flex -space-x-2 overflow-hidden
+	child:inline-block child:h-12 child:w-12 child:rounded-full child:ring-2 child:ring-white child-hover:shadow">
+	<img class="child" src="/img0.jpg" alt=""/>
+	<img class="child" src="/img1.jpg" alt=""/>
+	<img class="child" src="/img2.jpg" alt=""/>
+	<img class="child" src="/img3.jpg" alt=""/>
+	<img class="child" src="/img4.jpg" alt=""/>
+</div>
+```
 
 Isn't that nice?
 
-### Perhaps, a better solution for sibling (not implemented)
+### A better solution for sibling (not implemented)
 
 Add class `.siblings` to the first element, and that will set up a rule `.siblings ~ *` to apply the same rules to all of the siblings.
 
-This will make it simple to experiment, easy to understand, is clean and is DRY. FTW!
-```
+This will make it simple to experiment, easy to understand, is clean and is **DRY**. **FTW**!
+
+```html
 <div class="mt-3 flex -space-x-2 overflow-hidden">
     <img class="siblings inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow" src="/img0.jpg" alt=""/>
     <img src="/img1.jpg" alt=""/>
@@ -144,30 +161,34 @@ This will make it simple to experiment, easy to understand, is clean and is DRY.
 Even better, we can have `siblings-of-type` to have it only apply said classes to peer elements with same tag.
 Admittedly, I do not know of any similar existing TW rule, but maybe it is just a matter of no need.
 
-### Perhaps, a better solution for children (non-standard, not implemented)
+### A better solution for children (non-standard, not implemented)
 
 Tailwind doesn't use other custom attributes, but I don't see why they shouldn't. CSS can handle any selectors, and we can prefix with tw- if we worry about conflict.
 
 We can therefore create a children attribute with what ought to be applied to the children, and that would readable and DRY.
 
-	<div class="mt-3 flex -space-x-2 overflow-hidden"
-		children="siblings inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow"
-		>
-		<img  src="/img0.jpg" alt=""/>
-		<img src="/img1.jpg" alt=""/>
-		<img src="/img2.jpg" alt=""/>
-		<img src="/img3.jpg" alt=""/>
-		<img src="/img4.jpg" alt=""/>
-	</div>
+```html
+<div class="mt-3 flex -space-x-2 overflow-hidden"
+	children="siblings inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow"
+	>
+	<img  src="/img0.jpg" alt=""/>
+	<img src="/img1.jpg" alt=""/>
+	<img src="/img2.jpg" alt=""/>
+	<img src="/img3.jpg" alt=""/>
+	<img src="/img4.jpg" alt=""/>
+</div>
+```
 
 This would make a rather awkward css rule, but not one that affects the dev or the user:
     `[children="siblings inline-block h-12 w-12 rounded-full ring-2 ring-white hover:shadow"] > * { ... } `
 
 To be sure, I think that Tailwind should offer this for all psuedo-classes:
 
-	<div class="block"
-		tw-after="content-['wow'] text-white">...
-	</div>
+```html
+<div class="block"
+	tw-after="content-['wow'] text-white">...
+</div>
+```
 
 And it is my hope that this plugin might be a foray into such usage!
 
@@ -177,16 +198,18 @@ And it is my hope that this plugin might be a foray into such usage!
 Like every good project, Tailwind has a consistent style, and we should be consistent with it.  
 Here are examples where a TW class effects another element:
 
-	<body class="dark">
-		<p class="dark:shadow">p has shadow when dark theme enabled</p>
-	</body>
+```html
+<body class="dark">
+<p class="dark:shadow">p has shadow when dark theme enabled</p>
+</body>
 
-	<input class="peer">
-	<p class="peer-hover:shadow">p has shadow when hovering on input</p>
+<input class="peer">
+<p class="peer-hover:shadow">p has shadow when hovering on input</p>
 
-	<div class="group">
-		<p class="group-hover:shadow">p has shadow when hovering over div</p>
-	</div>
+<div class="group">
+<p class="group-hover:shadow">p has shadow when hovering over div</p>
+</div>
+```
 
 In each of these examples,
 - we have the class on both the "calling" and "receiving" elements,
@@ -199,7 +222,7 @@ Therefore, in the first version of tailwind-children, we used the form `child-ho
 To match  [@tailwindcss/typography], you can now use the form hover:child:shadow or hover:child-div:shadow.  
 In addittion, you can still use child-hover:shadow, but not when specifying a element type.  
 
-Let's see how that works out for us:
+### Let's see how that works out for us:
 
 1. When declaring a state, we can use the form `hover:child:shadow` with the hover *before* the child.
     - *Deprecated:* One can also use the form `child-hover:shadow`.   
@@ -207,34 +230,38 @@ Let's see how that works out for us:
 2. The rules only apply to children that have the matching `child/sibling/etc` class.  
 To demonstrate, if wanted only one of two children to match, here are several options.
 
-    a. Require elements to "opt-in" with a "child" class
-    ```
+	a. Require elements to "opt-in" with a "child" class
+    ```html
 	<div class="child:shadow">
 		<p class="child">Shadow</p>
 		<p>No Shadow</p>
 	</div>
 	```
+
 	b. Apply style to all children, and allow children to override rules as needed.
-    ```
+    ```html
 	<div class="child:shadow">
         <p>Shadow</p>
         <p class="drop-shadow-none">No Shadow</p>
     </div>
 	```
+
     c. Offer a no-child class that tells it to not inherit
-	```
+	```html
     <div class="child:shadow">
         <p>Shadow</p>
         <p class="no-child">No Shadow</p>
     </div>
 	```
+
     d. Only apply inheritance to element whose type is passed in. (Either `child-span` or `child-['span']`)
-    ```
+    ```html
 	<div class="child-span:shadow">
         <span>Shadow</span>
         <p>No Shadow</p>
     </div>
 	```
+
 	[tailwind-child] uses method d, and [@tailwindcss/typography] supports methods b, c and d.  
 	We hope to support all 4, but c is not yet implemented.
 3. No using a class to copy other classes. Excludes the "better sibling solution" above.
