@@ -1,38 +1,79 @@
 .border {
-    border-width: 1px
+  border-width: 1px
 }
+
 .bg-red-200 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(254 202 202 / var(--tw-bg-opacity))
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity))
 }
+
 .bg-teal-200 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
+
 .p-2 {
-    padding: 0.5rem
+  padding: 0.5rem
 }
+
 .hover\:border:hover {
-    border-width: 1px
+  border-width: 1px
 }
+
+.child-p\:bg-teal-200 > p {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+}
+
+.hover\:child-p\:border > p:hover {
+  border-width: 1px
+}
+
+.heir-p\:bg-teal-200 p {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+}
+
+.hover\:heir-p\:border p:hover {
+  border-width: 1px
+}
+
+.sibling-p\:bg-teal-200 ~ p {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+}
+
+.hover\:sibling-p\:border ~ p:hover {
+  border-width: 1px
+}
+
 .child\:bg-teal-200 > .child {
-    --tw-bg-opacity: 1;
-    background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
+
+.hover\:child\:border > .child:hover {
+  border-width: 1px
+}
+
 .heir\:bg-teal-200 .heir {
-    --tw-bg-opacity: 1;
-    background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
+
 .sibling\:bg-teal-200 ~ .sibling {
-    --tw-bg-opacity: 1;
-    background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
+
 .child-hover\:border > .child:hover {
-    border-width: 1px
+  border-width: 1px
 }
+
 .heir-hover\:border .heir:hover {
-    border-width: 1px
+  border-width: 1px
 }
+
 .sibling-hover\:border ~ .sibling:hover {
-    border-width: 1px
+  border-width: 1px
 }

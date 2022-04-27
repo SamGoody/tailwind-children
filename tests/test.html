@@ -9,6 +9,32 @@
 
 <body>
 	<div class="bg-red-200 p-2
+		child-p:bg-teal-200 hover:child-p:border">
+
+		<p>I have a teal background...</p>
+		<p>And a border on hover!</p>
+	</div>
+
+	<div class="bg-red-200 p-2
+		heir-p:bg-teal-200 hover:heir-p:border">
+
+		<div>
+			<p>I have a teal background...</p>
+		</div>
+		<div>
+			<p>And a border on hover!</p>
+		</div>
+	</div>
+
+	<div class="bg-red-200 p-2">
+		<p class="bg-teal-200 hover:border
+			sibling-p:bg-teal-200 hover:sibling-p:border">I have a teal background...</p>
+		<p class="sibling">And a border on hover!</p>
+	</div>
+
+	<h4>non element specific methods</h4>
+
+	<div class="bg-red-200 p-2
 		child:bg-teal-200 child-hover:border">
 
 		<p class="child">I have a teal background...</p>
@@ -30,6 +56,13 @@
 		<p class="bg-teal-200 hover:border
 			sibling:bg-teal-200 sibling-hover:border">I have a teal background...</p>
 		<p class="sibling">And a border on hover!</p>
+	</div>
+
+	<div class="bg-red-200 p-2
+		child:bg-teal-200 hover:child:border">
+
+		<p class="child">I have a teal background...</p>
+		<p class="child">And a border on hover!</p>
 	</div>
 </body>
 
