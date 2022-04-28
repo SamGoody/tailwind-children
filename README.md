@@ -13,9 +13,12 @@ npm install tailwind-children --save
 ```
 
 2. Add to tailwind.config.js
-		plugins: [
-			require('tailwind-children'),
-			]
+```js		
+plugins: [
+	require('tailwind-children'),
+	]
+```
+
 3. Build tailwind:
 ```
 npx tailwindcss -i ./src/input.css -o ./dist/output.css
@@ -26,16 +29,18 @@ npx tailwindcss -i ./src/input.css -o ./dist/output.css
 ### child variant
 Set the styles in the parent and it will apply for all children with matching `child` class.  
 Aletrnatively, set the type of child with child-{element type}, and rule will be applied to matching elements. 
-Can use `children` or `child` aliases.  
+*We are working on adding arbitrary classes in the form of `child-['.class']`, At which point we will remove all uncommon child-{element} variants. `child-p` and `child-div` are fine, but `child-video` will need to be changed to child-['video'].*
 
-Event Handling:
-events set *before* the element will be applied to children.   
+Aliases: `children` is an alias of `child`, and can be used interchangeably.  
+
+Event Handling:  
+Events set *before* the element will be applied to children. See [here](https://tailwindcss.com/docs/hover-focus-and-other-states#ordering-stacked-modifiers).  
 *Deprecated*: 
-Use `child-*` modifiers like `child-hover` to apply state and psuedo-classes to children elements:
+Use `child-*` modifiers like `child-hover` to apply state and psuedo-classes to children elements.
 
 ```html
 <!-- apply to all children with matching .child class -->
-<div class="overflow-hidden child:ring-white child-hover:shadow">
+<div class="overflow-hidden child:ring-white hover:child:shadow">
 	<p class="child">I have a white ring...</p>
 	<p class="child">And a shadow on hover!</p>
 </div>
@@ -53,7 +58,7 @@ Same usage, but includes non-direct descendants. Can use `descendant` or `heir` 
 
 ```html
 <div class="overflow-hidden
-		heir:ring-white heir-hover:shadow">
+		heir:ring-white hover:heir:shadow">
 	<div>
 		<p class="heir">I have a white ring...</p>
 	</div>
@@ -67,7 +72,10 @@ Same usage, but includes non-direct descendants. Can use `descendant` or `heir` 
 	<div>
 		<p>I have a white ring...</p>
 	</div>
-	<div>
+    <div>
+		<p class="
+			ring-white hover:shadow
+			sibling-p:ring-white hover:sibling-p:shadow">I have a white ring...</p>
 		<p>And a shadow on hover!</p>
 	</div>
 </div>
@@ -81,7 +89,7 @@ Styles must be applied twice - once for itself and once for siblings with `sibli
 <div>
 	<p class="
 		ring-white hover:shadow
-		sibling:ring-white sibling-hover:shadow">I have a white ring...</p>
+		sibling:ring-white hover:sibling:shadow">I have a white ring...</p>
 	<p class="sibling">And a shadow on hover!</p>
 </div>
 
@@ -129,7 +137,7 @@ Use `heir`, `child`, or `sibling` variants to target the respective elements (se
 
 ```html
 <div class="mt-3 flex -space-x-2 overflow-hidden
-	child:inline-block child:h-12 child:w-12 child:rounded-full child:ring-2 child:ring-white child-hover:shadow">
+	child:inline-block child:h-12 child:w-12 child:rounded-full child:ring-2 child:ring-white hover:child:shadow">
 	<img class="child" src="/img0.jpg" alt=""/>
 	<img class="child" src="/img1.jpg" alt=""/>
 	<img class="child" src="/img2.jpg" alt=""/>
@@ -270,6 +278,20 @@ I might eventually implement it, even though it is not a tailwind style rule at 
 # Contributing
 
 Please open issues, file bug reports, give me your opinions on variant names, default styles and behaviors, and whatever else you can think of. There are a lot of good things input can add!
+
+tailwind-children is a ES6 module that is backported to CommonJS for use with taiwindcss (which is in CommonJS format).
+
+Originally, we used [require-esm-in-cjs] to seetup a simple CJS wrapper around the ES6 module, but this seemed to have [created an issue for Vite users](https://github.com/SamGoody/tailwind-children/issues/1))
+
+Until that can be resolved, am using esbuild (installed globally) to export to CJS for production as follows:
+1. `esbuild ./src/index.mjs --outdir=dist --format=cjs`
+2. `echo "module.exports = src_default;" >> "./dist/index.js"`
+
+To run tailwind and test visually: 
+1. `npx tailwind -o ./tests/test.css -c ./tests/tailwind.config.cjs -i ./tests/input.css`
+
+To run tests in JEST:
+1. `npm run test`
 
 [tailwindcss-children]: https://github.com/benface/tailwindcss-children
 [@tailwindcss/typography]: https://tailwindcss.com/docs/typography-plugin
