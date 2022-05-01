@@ -1,9 +1,9 @@
 import { default as plugin } from 'tailwindcss/plugin.js'
 
 const aliases = Object.entries({
-    "& >": ['children', 'child'],
-    "&"  : ['heir', 'descendant'],
-    "& ~": ['sibling', 'twin'],
+    ":where(&) > ": ['children', 'child'],
+    ":where(&)   ": ['heir', 'descendant'],
+    ":where(&) ~ ": ['sibling', 'twin'],
     })
 
 // Handle all tailwind psuedoclasses, see:
@@ -41,11 +41,11 @@ let variants = psuedo.flatMap(([pstate, pclass, pselector]) =>
     aliases.flatMap(([prefix, newvariants]) =>
         newvariants.map(newvariant => [
             `${newvariant}-${pstate}`,
-            `${prefix} .${newvariant}` + (pselector || `:${pclass}`)
+            `${prefix} :where(.${newvariant}` + (pselector || `:${pclass}`) + ')'
             ])))
 
 let basic = aliases
-    .flatMap(([k, v]) => v.map(i => [i, `${k} .${i}`]));
+    .flatMap(([k, v]) => v.map(i => [i, `${k} :where(.${i})`]));
 
 variants.unshift(...basic);
 
