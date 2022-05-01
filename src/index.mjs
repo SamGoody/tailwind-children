@@ -80,7 +80,7 @@ let children = els.flatMap(([pstate, pclass, pselector]) =>
     aliases.flatMap(([prefix, newvariants]) =>
         newvariants.map(newvariant => [
             `${newvariant}-${pstate}`,
-            `${prefix} ${pclass}`
+            `${prefix} ${pclass}:where(:not(.not-${newvariant}-${pstate}))`
             ])))
 
 variants.unshift(...children);
