@@ -206,14 +206,14 @@ Here are examples where a TW class effects another element:
 
 ```html
 <body class="dark">
-<p class="dark:shadow">p has shadow when dark theme enabled</p>
+    <p class="dark:shadow">p has shadow when dark theme enabled</p>
 </body>
 
 <input class="peer">
 <p class="peer-hover:shadow">p has shadow when hovering on input</p>
 
 <div class="group">
-<p class="group-hover:shadow">p has shadow when hovering over div</p>
+    <p class="group-hover:shadow">p has shadow when hovering over div</p>
 </div>
 ```
 
@@ -228,23 +228,16 @@ Therefore, in the first version of tailwind-children, we used the form `child-ho
 To match  [@tailwindcss/typography], you can now use the form hover:child:shadow or hover:child-div:shadow.  
 In addittion, you can still use child-hover:shadow, but not when specifying a element type.  
 
-### Let's see how that works out for us:
+### psuedo-classes (eg. hover)
 
-1. When declaring a state, we can use the form `hover:child:shadow` with the hover *before* the child.
-    - *Deprecated:* One can also use the form `child-hover:shadow`.   
-    This form cannot be used with a element type (eg. `child-div-hover:shadow` won't work).
-2. The rules only apply to children that have the matching `child/sibling/etc` class.  
-To demonstrate, if wanted only one of two children to match, here are several options.
+When declaring a state, we can use the form `hover:child:shadow` with the hover *before* the child.  
+*Deprecated:* One can also use the form `child-hover:shadow`. This will be dropped soon.  
 
-	a. Require elements to "opt-in" with a "child" class
-    ```html
-	<div class="child:shadow">
-		<p class="child">Shadow</p>
-		<p>No Shadow</p>
-	</div>
-	```
+### Overriding parent rules.
 
-	b. Apply style to all children, and allow children to override rules as needed.
+Rules are applied to all children, descendants and siblings, but can be overridden as follows:
+
+	a. Rules on children have precedence over rules on the parent.
     ```html
 	<div class="child:shadow">
         <p>Shadow</p>
@@ -252,7 +245,7 @@ To demonstrate, if wanted only one of two children to match, here are several op
     </div>
 	```
 
-    c. Offer a no-child class that tells it to not inherit
+	b. class .not-child which excludes all content.
 	```html
     <div class="child:shadow">
         <p>Shadow</p>
@@ -260,16 +253,24 @@ To demonstrate, if wanted only one of two children to match, here are several op
     </div>
 	```
 
-    d. Only apply inheritance to element whose type is passed in. (Either `child-span` or `child-['span']`)
+	c. Limit children via CSS selector. The syntax is `child-['$selector']`. 
+	    This is planned but not yet implemented.
     ```html
-	<div class="child-span:shadow">
-        <span>Shadow</span>
-        <p>No Shadow</p>
+	<div class="child-['.child']:shadow">
+	    <p class="child">Shadow</p>
+	    <p>No Shadow</p>
+	</div>
+	```
+
+	d. Limit children via tag, with syntax `child-$tag`; Shorthand for `child-['$tag']`. 
+	    [ Until arbitrary css is available, one can use any element tag. This will later be reduced to common tags (a, b, i, p, u, div, span, ul, ol, li). ]
+	```html
+    <div class="child-p:shadow">
+        <p>Shadow</p>
+        <a>No Shadow</a>
     </div>
 	```
 
-	[tailwind-child] uses method d, and [@tailwindcss/typography] supports methods b, c and d.  
-	We hope to support all 4, but c is not yet implemented.
 3. No using a class to copy other classes. Excludes the "better sibling solution" above.
 The idea was to set a flag that the styles and events that applied to the first should be applied to all siblings. Eventually, I do hope to implement this, so that it can be ignored by purists.
 4. No custom attributes, which excludes the "better children solution" above.
@@ -292,6 +293,19 @@ To run tailwind and test visually:
 
 To run tests in JEST:
 1. `npm run test`
+
+The docs for working with variants are not at all together, but here are some useful links:
+- [addVariant API conversation](https://github.com/tailwindlabs/tailwindcss/pull/5809)
+- [addVariant API commit message](https://github.com/tailwindlabs/tailwindcss/commit/5809c4d07c11808d9ff930fb41c09e37aed4176c)
+- [Question about new addVariant API](https://github.com/tailwindlabs/tailwindcss/discussions/6757)
+- [Docs: Plugins - addVariant() ](https://tailwindcss.com/docs/plugins#adding-variants)
+- [Docs: Writing Plugins](https://tailwindcss.com/docs/adding-custom-styles#writing-plugins)
+- [tailwind global plugin function example](https://github.com/tailwindlabs/tailwindcss/discussions/6473#discussioncomment-2007720)
+- [tailwind source: createPlugin.js](https://github.com/tailwindlabs/tailwindcss/blob/bab689ca8284265f51d5b66a1f3f1007850d97c1/src/util/createPlugin.js) - is called by wrapper [plugin.js](https://github.com/tailwindlabs/tailwindcss/blob/bab689ca8284265f51d5b66a1f3f1007850d97c1/plugin.js)
+- [tailwind source: core plugins](https://github.com/tailwindlabs/tailwindcss/blob/bab689ca8284265f51d5b66a1f3f1007850d97c1/src/corePlugins.js)
+- [tailwind source: variants.test.js](https://github.com/tailwindlabs/tailwindcss/blob/master/tests/variants.test.js)
+- [tailwind source: all variants](https://github.com/tailwindlabs/tailwindcss/blob/master/tests/variants.test.html)
+- [postcss-selector-parser API docs](https://github.com/postcss/postcss-selector-parser/blob/master/API.md)
 
 [tailwindcss-children]: https://github.com/benface/tailwindcss-children
 [@tailwindcss/typography]: https://tailwindcss.com/docs/typography-plugin
