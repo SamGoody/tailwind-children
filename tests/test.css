@@ -12,68 +12,77 @@
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
+.bg-teal-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 94 89 / var(--tw-bg-opacity))
+}
+
 .p-2 {
   padding: 0.5rem
+}
+
+.italic {
+  font-style: italic
 }
 
 .hover\:border:hover {
   border-width: 1px
 }
 
-.child-p\:bg-teal-200 > p {
+:where(.child-p\:bg-teal-200) > p:where(:not(.not-child-p)) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-.hover\:child-p\:border > p:hover {
+:where(.hover\:child-p\:border) > p:where(:not(.not-child-p)):hover {
   border-width: 1px
 }
 
-.heir-p\:bg-teal-200 p {
+:where(.heir-p\:bg-teal-200) p:where(:not(.not-heir-p)) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-.hover\:heir-p\:border p:hover {
+:where(.hover\:heir-p\:border) p:where(:not(.not-heir-p)):hover {
   border-width: 1px
 }
 
-.sibling-p\:bg-teal-200 ~ p {
+:where(.sibling-p\:bg-teal-200) ~ p:where(:not(.not-sibling-p)) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-.hover\:sibling-p\:border ~ p:hover {
+:where(.hover\:sibling-p\:border) ~ p:where(:not(.not-sibling-p)):hover {
   border-width: 1px
 }
 
-.child\:bg-teal-200 > .child {
+:where(.child\:bg-teal-200) > :where(.child) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-.hover\:child\:border > .child:hover {
+:where(.hover\:child\:border) > :where(.child):hover {
   border-width: 1px
 }
 
-.heir\:bg-teal-200 .heir {
+:where(.heir\:bg-teal-200) :where(.heir) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-.sibling\:bg-teal-200 ~ .sibling {
+:where(.sibling\:bg-teal-200) ~ :where(.sibling) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-.child-hover\:border > .child:hover {
+:where(.child-hover\:border) > :where(.child:hover) {
   border-width: 1px
 }
 
-.heir-hover\:border .heir:hover {
+:where(.heir-hover\:border) :where(.heir:hover) {
   border-width: 1px
 }
 
-.sibling-hover\:border ~ .sibling:hover {
+:where(.sibling-hover\:border) ~ :where(.sibling:hover) {
   border-width: 1px
 }

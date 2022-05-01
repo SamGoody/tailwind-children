@@ -64,6 +64,44 @@
 		<p class="child">I have a teal background...</p>
 		<p class="child">And a border on hover!</p>
 	</div>
+
+	<p>Test for overrides</p>
+	<div class="bg-red-200 p-2
+		child:bg-teal-200 hover:child:border">
+
+		<p class="child">And a border on hover!</p>
+		<p class="child bg-teal-800">I have a dark background...</p>
+	</div>
+
+	<div class="bg-red-200 p-2
+		child-p:bg-teal-200 hover:child-p:border">
+
+		<p>child: teal bg, hover</p>
+		<p class="bg-teal-800">child.bg-teal-800: dark bg, hover</p>
+		<p class="not-child-p">child.not-child-p: no bg, no hover</p>
+		<div>
+			div: no bg, no hover
+			<p>nested: no bg, no hover</p>
+		</div>
+	</div>
+	<div class="bg-red-200 p-2
+		heir-p:bg-teal-200 hover:heir-p:border">
+		<div>
+			<p>heir: teal bg, hover</p>
+			<p class="bg-teal-800">heir.bg-teal-800: dark bg, hover</p>
+			<p class="not-heir-p">heir.not-heir-p: no bg, no hover</p>
+			<div>div: no bg, no hover</div>
+		</div>
+	</div>
+	<div class="bg-red-200 p-2">
+		<p class="
+			bg-teal-200 hover:border
+			sibling-p:bg-teal-200 hover:sibling-p:border">original twin: teal bg, hover</p>
+		<p>twin: teal bg, hover</p>
+		<p class="italic bg-teal-800">twin.bg-teal-800: dark bg, hover</p>
+		<p class="italic not-sibling-p">twin.not-twin-p: no bg, no hover</p>
+		<div>div: no bg, no hover</div>
+	</div>
 </body>
 
 </html>
