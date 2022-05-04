@@ -25,9 +25,9 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 var import_plugin = __toESM(require("tailwindcss/plugin.js"), 1);
 const aliases = Object.entries({
-  "& >": ["children", "child"],
-  "&": ["heir", "descendant"],
-  "& ~": ["sibling", "twin"]
+  ":where(&) > ": ["children", "child"],
+  ":where(&)   ": ["heir", "descendant"],
+  ":where(&) ~ ": ["sibling", "twin"]
 });
 let variants = aliases.flatMap(([k, v]) => v.map((i) => [i, `${k} :where(:not(.not-${i}))`]));
 const els = [
@@ -106,7 +106,7 @@ const els = [
 ].map((v) => [v, v]);
 let children = els.flatMap(([pstate, pclass, pselector]) => aliases.flatMap(([prefix, newvariants]) => newvariants.map((newvariant) => [
   `${newvariant}-${pstate}`,
-  `${prefix} ${pclass}`
+  `${prefix} ${pclass}:where(:not(.not-${newvariant}-${pstate}))`
 ])));
 variants.unshift(...children);
 var src_default = (0, import_plugin.default)(({ addVariant }) => variants.forEach((v) => addVariant(...v)));
