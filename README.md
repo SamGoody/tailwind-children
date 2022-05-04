@@ -278,6 +278,19 @@ I might eventually implement it, even though it is not a tailwind style rule at 
 
 ## Changes from earlier versions.
 
+[Modifiers such as :hover](https://tailwindcss.com/docs/hover-focus-and-other-states) must be set *first* (eg. hover:child:shadow) for it [to be applied to the children](https://tailwindcss.com/docs/hover-focus-and-other-states#ordering-stacked-modifiers).
+
+In earlier versions, we created custom variants for all modifiers, so that you can use the form `child-hover`, which is easier to read, and matches group and peer:
+
+```html
+<input class="peer">
+<p class="peer-hover:shadow">p has shadow when hovering on input</p>
+
+<div class="group">
+    <p class="group-hover:shadow">p has shadow when hovering over div</p>
+</div>
+```
+
 #### Matching selector on child
 
 Earlier versions limitted matching children to those havng a class `.child`.  

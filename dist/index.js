@@ -29,63 +29,7 @@ const aliases = Object.entries({
   "&": ["heir", "descendant"],
   "& ~": ["sibling", "twin"]
 });
-const psuedo = [
-  ...[
-    "active",
-    "focus",
-    "focus-within",
-    "focus-visible",
-    "hover",
-    "disabled",
-    "first-of-type",
-    "last-of-type",
-    "only-of-type",
-    "autofill",
-    "checked",
-    "default",
-    "indeterminate",
-    "placeholder-shown",
-    "required",
-    "valid",
-    "invalid",
-    "in-range",
-    "out-of-range",
-    "read-only",
-    "empty",
-    "visited",
-    "target"
-  ].map((v) => [v, v]),
-  ...[
-    "before",
-    "after",
-    "first-letter",
-    "first-line",
-    "marker",
-    "selection",
-    "placeholder"
-  ].map((v) => [v, `:${v}`]),
-  ...[
-    ["open", "open"],
-    ["rtl", 'dir="rtl"'],
-    ["ltr", 'dir="ltr"']
-  ].map((v) => [v[0], "", `[${v[1]}]`]),
-  ...[
-    ["first", "first-child"],
-    ["last", "last-child"],
-    ["only", "only-child"],
-    ["odd", "nth-child(odd)"],
-    ["even", "nth-child(even)"],
-    ["not-first", "not(:first-child)"],
-    ["not-last", "not(:last-child)"],
-    ["file", "file-selector-button"]
-  ]
-];
-let variants = psuedo.flatMap(([pstate, pclass, pselector]) => aliases.flatMap(([prefix, newvariants]) => newvariants.map((newvariant) => [
-  `${newvariant}-${pstate}`,
-  `${prefix} .${newvariant}` + (pselector || `:${pclass}`)
-])));
-let basic = aliases.flatMap(([k, v]) => v.map((i) => [i, `${k} :where(:not(.not-${i}))`]));
-variants.unshift(...basic);
+let variants = aliases.flatMap(([k, v]) => v.map((i) => [i, `${k} :where(:not(.not-${i}))`]));
 const els = [
   "address",
   "article",
