@@ -1,5 +1,6 @@
-.border {
-  border-width: 1px
+.bg-teal-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 94 89 / var(--tw-bg-opacity))
 }
 
 .bg-red-200 {
@@ -10,11 +11,6 @@
 .bg-teal-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
-}
-
-.bg-teal-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 94 89 / var(--tw-bg-opacity))
 }
 
 .p-2 {
@@ -56,33 +52,16 @@
   border-width: 1px
 }
 
-:where(.child\:bg-teal-200) > :where(.child) {
+:where(.child\:bg-teal-200) > :where(:not(.not-child)) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-:where(.hover\:child\:border) > :where(.child):hover {
+:where(.hover\:child\:border) > :where(:not(.not-child)):hover {
   border-width: 1px
 }
 
-:where(.heir\:bg-teal-200) :where(.heir) {
+:where(.sibling\:bg-red-200) ~ :where(:not(.not-sibling)) {
   --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
-}
-
-:where(.sibling\:bg-teal-200) ~ :where(.sibling) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
-}
-
-:where(.child-hover\:border) > :where(.child:hover) {
-  border-width: 1px
-}
-
-:where(.heir-hover\:border) :where(.heir:hover) {
-  border-width: 1px
-}
-
-:where(.sibling-hover\:border) ~ :where(.sibling:hover) {
-  border-width: 1px
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity))
 }
