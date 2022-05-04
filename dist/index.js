@@ -84,7 +84,7 @@ let variants = psuedo.flatMap(([pstate, pclass, pselector]) => aliases.flatMap((
   `${newvariant}-${pstate}`,
   `${prefix} .${newvariant}` + (pselector || `:${pclass}`)
 ])));
-let basic = aliases.flatMap(([k, v]) => v.map((i) => [i, `${k} .${i}`]));
+let basic = aliases.flatMap(([k, v]) => v.map((i) => [i, `${k} :where(:not(.not-${i}))`]));
 variants.unshift(...basic);
 const els = [
   "address",

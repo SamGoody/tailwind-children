@@ -276,6 +276,30 @@ The idea was to set a flag that the styles and events that applied to the first 
 4. No custom attributes, which excludes the "better children solution" above.
 I might eventually implement it, even though it is not a tailwind style rule at all. Feel free to not use.
 
+## Changes from earlier versions.
+
+#### Matching selector on child
+
+Earlier versions limitted matching children to those havng a class `.child`.  
+Basically opt-in to have a style applied.
+
+This matched the styles in peer, group, theme, etc.
+
+```html
+<body class="dark">
+    <p class="dark:shadow">p has shadow when dark theme enabled</p>
+</body>
+
+<input class="peer">
+<p class="peer-hover:shadow">p has shadow when hovering on input</p>
+
+<div class="group">
+    <p class="group-hover:shadow">p has shadow when hovering over div</p>
+</div>
+```
+
+However, we now offer much more flexibility with limitations and overrides, and the old sytax was usually not the desired one, so we dropped it.  Besides, this matches typography. :)
+
 # Contributing
 
 Please open issues, file bug reports, give me your opinions on variant names, default styles and behaviors, and whatever else you can think of. There are a lot of good things input can add!

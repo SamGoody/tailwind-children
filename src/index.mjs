@@ -45,7 +45,7 @@ let variants = psuedo.flatMap(([pstate, pclass, pselector]) =>
             ])))
 
 let basic = aliases
-    .flatMap(([k, v]) => v.map(i => [i, `${k} :where(.${i})`]));
+    .flatMap(([k, v]) => v.map(i => [i, `${k} :where(:not(.not-${i}))`]));
 
 variants.unshift(...basic);
 
