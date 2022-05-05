@@ -42,8 +42,11 @@ let variants = elements.flatMap((element) =>
             
             const variant = alias + (element ? `-${element}` : '');
             const base = `:where(&) ${selector} ${element}:where(:not(.not-${variant}))`;
-           
-            return [variant, base]; //css
+            const added = {
+                ' ': `:where(&) ${selector} :where(:not(.not-${variant})) ${element}`
+                }[selector];
+                
+            return [variant, added ? [base, added] : base];
             })))
 
 // console.log(variants)
