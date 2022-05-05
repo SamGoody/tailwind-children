@@ -8,11 +8,6 @@
   background-color: rgb(254 202 202 / var(--tw-bg-opacity))
 }
 
-.bg-teal-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
-}
-
 .p-2 {
   padding: 0.5rem
 }
@@ -21,8 +16,23 @@
   font-style: italic
 }
 
-.hover\:border:hover {
+:where(.child\:bg-teal-200) > :where(:not(.not-child)) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+}
+
+:where(.hover\:child\:border) > :where(:not(.not-child)):hover {
   border-width: 1px
+}
+
+:where(.sibling\:bg-red-200) ~ :where(:not(.not-sibling)) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity))
+}
+
+:where(.sibling\:bg-red-200:not(.not-sibling)) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity))
 }
 
 :where(.child-p\:bg-teal-200) > p:where(:not(.not-child-p)) {
@@ -43,6 +53,15 @@
   border-width: 1px
 }
 
+:where(.heir-p\:bg-teal-200) :where(:not(.not-heir-p)) p {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity))
+}
+
+:where(.hover\:heir-p\:border) :where(:not(.not-heir-p)) p:hover {
+  border-width: 1px
+}
+
 :where(.sibling-p\:bg-teal-200) ~ p:where(:not(.not-sibling-p)) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
@@ -52,16 +71,11 @@
   border-width: 1px
 }
 
-:where(.child\:bg-teal-200) > :where(:not(.not-child)) {
+:where(.sibling-p\:bg-teal-200:not(.not-sibling-p)) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity))
 }
 
-:where(.hover\:child\:border) > :where(:not(.not-child)):hover {
+:where(.hover\:sibling-p\:border:not(.not-sibling-p)):hover {
   border-width: 1px
-}
-
-:where(.sibling\:bg-red-200) ~ :where(:not(.not-sibling)) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity))
 }

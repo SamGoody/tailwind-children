@@ -24,13 +24,13 @@ __export(src_exports, {
 });
 module.exports = __toCommonJS(src_exports);
 var import_plugin = __toESM(require("tailwindcss/plugin.js"), 1);
-const aliases = Object.entries({
-  ":where(&) > ": ["children", "child"],
-  ":where(&)   ": ["heir", "descendant"],
-  ":where(&) ~ ": ["sibling", "twin"]
+const alias_list = Object.entries({
+  ">": ["children", "child"],
+  " ": ["heir", "descendant"],
+  "~": ["sibling", "twin"]
 });
-let variants = aliases.flatMap(([k, v]) => v.map((i) => [i, `${k} :where(:not(.not-${i}))`]));
-const els = [
+const elements = [
+  "",
   "address",
   "article",
   "aside",
@@ -103,11 +103,15 @@ const els = [
   "source",
   "svg",
   "math"
-].map((v) => [v, v]);
-let children = els.flatMap(([pstate, pclass, pselector]) => aliases.flatMap(([prefix, newvariants]) => newvariants.map((newvariant) => [
-  `${newvariant}-${pstate}`,
-  `${prefix} ${pclass}:where(:not(.not-${newvariant}-${pstate}))`
-])));
-variants.unshift(...children);
+];
+let variants = elements.flatMap((element) => alias_list.flatMap(([selector, aliases]) => aliases.map((alias) => {
+  const variant = alias + (element ? `-${element}` : "");
+  const base = `:where(&) ${selector} ${element}:where(:not(.not-${variant}))`;
+  const added = {
+    "~": `:where(&:not(.not-${variant}))`,
+    " ": `:where(&) ${selector} :where(:not(.not-${variant})) ${element}`
+  }[selector];
+  return [variant, added ? [base, added] : base];
+})));
 var src_default = (0, import_plugin.default)(({ addVariant }) => variants.forEach((v) => addVariant(...v)));
 module.exports = src_default;
